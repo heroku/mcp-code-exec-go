@@ -126,9 +126,9 @@ Content-Length: 148
 Content-Length: 66
 
 {"jsonrpc":"2.0","method":"notifications/initialized","params":{}}
-Content-Length: 205
+Content-Length: 248
 
-{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"code_exec_go","arguments":{"code":"import numpy as np; print(np.random.rand(50).tolist())","packages":["numpy"]}}}
+{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"code_exec_go","arguments":{"code":"package main\nimport (\n  \"fmt\"\n  \"math/rand\"\n)\nfunc main() {\n  for i := 0; i < 50; i++ {\n    fmt.Printf(\"%f \", rand.Float64())\n  }\n}","packages":[]}}}
 EOF
 ```
 *(Note that the server expects the client to send a shutdown request, so you can stop the connection with CTRL-C)*
@@ -156,8 +156,8 @@ heroku run --app $APP_NAME -- bash -c '
 python -m example_clients.test_stdio mcp call_tool --args '\''{
   "name": "code_exec_go",
   "arguments": {
-    "code": "import numpy as np; print(np.random.rand(50).tolist())",
-    "packages": ["numpy"]
+    "code": "package main\nimport (\n  \"fmt\"\n  \"math/rand\"\n)\nfunc main() {\n  for i := 0; i < 50; i++ {\n    fmt.Printf(\"%f \", rand.Float64())\n  }\n}",
+    "packages": []
   }
 }'\'' | jq
 '
