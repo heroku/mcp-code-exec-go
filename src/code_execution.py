@@ -41,6 +41,9 @@ def code_exec_go(code: str, packages: Optional[List[str]] = None) -> Dict[str, A
     """
     Executes a Go code snippet with optional Go module dependencies.
 
+    Note that this does NOT mean the code is fully isolated or secure - it just means the package installations
+    are isolated.
+
     Args:
         code: The Go code to execute as a string.
         packages: An optional list of Go package import paths to install using `go get`.
