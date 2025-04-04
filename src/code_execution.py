@@ -20,22 +20,22 @@ def run_command(cmd: List[str], cwd: Optional[str] = None) -> Dict[str, Any]:
             "stderr": "Error: Execution timed out"
         }
 
-def install_dependencies(packages: Optional[List[str]]) -> Dict[str, Any]:
+def install_dependencies(packages: Optional[List[str]], cwd: Optional[str] = None) -> Dict[str, Any]:
     """
-    Installs required packages for a given language using the appropriate package manager.
+    Installs required Go packages using `go get`.
 
     Args:
-        packages: A list of package names to install
+        packages: A list of Go import paths to install.
+        cwd: Directory where go.mod exists.
 
     Returns:
-        The result of the package installation command, or a no-op result if no install is needed.
+        Result of the install command.
     """
-
     if not packages:
-        return {"returncode": 0, "stdout": "", "stderr": ""}  # No installation needed
+        return {"returncode": 0, "stdout": "", "stderr": ""}
 
     cmd = ["go", "get"] + packages
-    return run_command(cmd)
+    return run_command(cmd, cwd=cwd)
 
 def code_exec_go(code: str, packages: Optional[List[str]] = None) -> Dict[str, Any]:
     """
