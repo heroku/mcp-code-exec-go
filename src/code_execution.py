@@ -55,7 +55,7 @@ def code_exec_go(code: str, packages: Optional[List[str]] = None) -> Dict[str, A
     temp_dir = tempfile.mkdtemp()
     try:
         # Initialize a Go module
-        mod_result = run_command(["go", "mod", "init", "tempmodule"], cwd=temp_dir)
+        mod_result = run_command(["go", "run", "."], cwd=temp_dir)
         if mod_result["returncode"] != 0:
             return mod_result
 
