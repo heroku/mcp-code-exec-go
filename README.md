@@ -90,8 +90,8 @@ Example tool call request:
 python example_clients/test_sse.py mcp call_tool --args '{
   "name": "code_exec_go",
   "arguments": {
-    "code": "import numpy as np; print(np.random.rand(50).tolist())",
-    "packages": ["numpy"]
+    "code": "package main\nimport (\n  \"fmt\"\n  \"math/rand\"\n)\nfunc main() {\n  for i := 0; i < 50; i++ {\n    fmt.Printf(\"%f \", rand.Float64())\n  }\n}",
+    "packages": []
   }
 }' | jq
 ```
@@ -110,8 +110,8 @@ Example tool call request:
 python example_clients/test_stdio.py mcp call_tool --args '{
   "name": "code_exec_go",
   "arguments": {
-    "code": "import numpy as np; print(np.random.rand(50).tolist())",
-    "packages": ["numpy"]
+    "code": "package main\nimport (\n  \"fmt\"\n  \"math/rand\"\n)\nfunc main() {\n  for i := 0; i < 50; i++ {\n    fmt.Printf(\"%f \", rand.Float64())\n  }\n}",
+    "packages": []
   }
 }' | jq
 ```
