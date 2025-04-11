@@ -125,13 +125,10 @@ python example_clients/test_stdio.py mcp call_tool --args '{
 Example tool call request:
 ```bash
 cat <<EOF | python -m src.stdio_server
-Content-Length: 148
 
 {"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"0.1.0","capabilities":{},"clientInfo":{"name":"test","version":"1.0.0"}}}
-Content-Length: 66
 
 {"jsonrpc":"2.0","method":"notifications/initialized","params":{}}
-Content-Length: 248
 
 {"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"code_exec_go","arguments":{"code":"package main\nimport (\n  \"fmt\"\n  \"math/rand\"\n)\nfunc main() {\n  for i := 0; i < 50; i++ {\n    fmt.Printf(\"%f \", rand.Float64())\n  }\n}","packages":[]}}}
 EOF
@@ -173,13 +170,10 @@ Or, you can also run or simulate a client locally that sends your client-side re
 
 ```bash
 heroku run --app "$APP_NAME" -- bash -c "python -m src.stdio_server 2> logs.txt" <<EOF
-Content-Length: 148
 
 {"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"0.1.0","capabilities":{},"clientInfo":{"name":"test","version":"1.0.0"}}}
-Content-Length: 66
 
 {"jsonrpc":"2.0","method":"notifications/initialized","params":{}}
-Content-Length: 248
 
 {"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"code_exec_go","arguments":{"code":"package main\nimport (\n  \"fmt\"\n  \"math/rand\"\n)\nfunc main() {\n  for i := 0; i < 50; i++ {\n    fmt.Printf(\"%f \", rand.Float64())\n  }\n}","packages":[]}}}
 EOF
