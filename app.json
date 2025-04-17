@@ -5,7 +5,8 @@
     "env": {
         "API_KEY": {
             "description": "API key for authentication",
-            "required": true
+            "required": true,
+            "generator": "secret"
         },
         "GO_INSTALL_TOOLS_IN_IMAGE": {
             "description": "Ensures the `go` binary is available in the Heroku Dyno.",
