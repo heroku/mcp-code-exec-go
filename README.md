@@ -92,13 +92,13 @@ python example_clients/test_sse.py mcp list_tools | jq
 Example tool call request:
 *NOTE: this will intentionally NOT work if you have set `STDIO_MODE_ONLY` to `true`.*
 ```bash
-python example_clients/test_sse.py mcp call_tool --args '{
+python example_clients/test_stdio.py mcp call_tool --args '{
   "name": "code_exec_go",
   "arguments": {
-    "code": "package main\nimport (\n  \"fmt\"\n  \"math/rand\"\n)\nfunc main() {\n  for i := 0; i < 50; i++ {\n    fmt.Printf(\"%f \", rand.Float64())\n  }\n}",
-    "packages": []
+    "code": "package main\nimport (\n  \"github.com/fatih/color\"\n)\nfunc main() {\n  color.NoColor = false\n  color.Red(\"This should be red!\")\n}",
+    "packages": ["github.com/fatih/color"]
   }
-}' | jq
+}' | jq -r '.content[0].text' | jq -r .stdout
 ```
 
 ### Local STDIO
