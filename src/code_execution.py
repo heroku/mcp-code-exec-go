@@ -54,6 +54,8 @@ def code_exec_go(
     The Go runtime has access to networking, the filesystem, and standard packages.
     Code is compiled and run in a temporary module directory with any specified dependencies installed.
 
+    A non-zero exit code is an error and should be fixed.
+
     Returns:
         JSON containing:
             - 'returncode': Exit status of the execution.
