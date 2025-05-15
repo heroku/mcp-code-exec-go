@@ -10,7 +10,7 @@
         },
         "GO_INSTALL_TOOLS_IN_IMAGE": {
             "description": "Ensures the `go` binary is available in the Heroku Dyno.",
-            "value": true
+            "value": "true"
         },
         "WEB_CONCURRENCY": {
             "description": "Number of Uvicorn worker processes to launch (leave at 1 for async SSE server)",
@@ -18,7 +18,7 @@
         },
         "STDIO_MODE_ONLY": {
             "description": "Only allow tool requests via STDIO mode?",
-            "value": false
+            "value": "false"
         }
     },
     "formation": [
@@ -30,7 +30,11 @@
     ],
     "addons": [],
     "buildpacks": [
-        { "url": "heroku/python" },
-        { "url": "heroku/go" }
+        {
+            "url": "heroku/python"
+        },
+        {
+            "url": "heroku/go"
+        }
     ]
 }
