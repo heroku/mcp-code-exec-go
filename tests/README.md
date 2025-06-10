@@ -29,12 +29,17 @@ heroku ps:scale web=1 -a "$APP_NAME"
 pip install -r requirements.txt
 ```
 
-## 2 · Run local transports only
+Next, deploy your app. This is required for 2 (for remote STDIO) and 3 below ().
+```bash
+git push heroku <your-branch>:main
+```
+
+## 2 · Run local & one-off-dyno (STDIO) deployed transports
 ```bash
 pytest tests -q
 ```
 
-## 3 - Run local & remote transports
+## 3 - Run local & all deployed transports
 ```bash
 MCP_SERVER_URL=$(heroku info -s -a "$APP_NAME" | grep web_url | cut -d= -f2 | tr -d '\n') \
 API_KEY=$(heroku config:get API_KEY -a "$APP_NAME") \
