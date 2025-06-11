@@ -54,6 +54,6 @@ async def test_list_tools(ctx):
 
 
 async def test_code_exec(ctx):
-    payload = json.dumps({"name": "code_exec_go", "arguments": {"code": 'fmt.Println(2 + 2)'}})
+    payload = json.dumps({"name": "code_exec_go", "arguments": {"code": 'package main\nimport "fmt"\nfunc main() {\n  fmt.Println(2 + 2)\n}'}})
     data = await _safe_call(ctx, "call_tool", "--args", payload)
     assert _extract_stdout(data) == "4"
