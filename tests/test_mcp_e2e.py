@@ -1,12 +1,13 @@
 """
 End-to-end sanity checks using Hillary’s example clients exclusively.
 """
-
 from __future__ import annotations
 import json
 import pytest
+import textwrap
+import re
 
-from .client_runner import call_client    # <= unchanged helper
+from .client_runner import call_client
 
 pytestmark = pytest.mark.asyncio
 
@@ -21,13 +22,11 @@ def _extract_stdout(blob: str) -> str | None:
     """
     try:
         if not blob.lstrip().startswith("{"):
-            # to remove INFO log lines
             blob = blob[blob.index("{") :]
-
         outer = json.loads(blob)
         if isinstance(outer, dict) and outer.get("content"):
             inner = json.loads(outer["content"][0]["text"])
-        else:                       # older SSE client may skip envelope
+        else:
             inner = outer
         return inner.get("stdout")
     except Exception:
@@ -54,6 +53,20 @@ async def test_list_tools(ctx):
 
 
 async def test_code_exec(ctx):
-    payload = json.dumps({"name": "code_exec_go", "arguments": {"code": 'package main\nimport "fmt"\nfunc main() {\n  fmt.Println(2 + 2)\n}'}})
+    code = textwrap.dedent("""
+        package main
+        import "fmt"
+        func main() {
+            fmt.Println(2 + 2)
+        }
+    """)
+
+    code = re.sub(r"[^\x09\x0A\x20-\x7E]", "", code)
+    payload = json.dumps({"name": "code_exec_go", "arguments": {"code": code}})
     data = await _safe_call(ctx, "call_tool", "--args", payload)
+    print('HELLO')
+    print(data)
+    print("Code repr:", repr(code))
+    print("Code bytes:", list(code.encode("utf-8")))
+    print(_extract_stdout(data))
     assert _extract_stdout(data) == "4"
