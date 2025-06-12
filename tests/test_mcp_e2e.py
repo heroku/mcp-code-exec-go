@@ -61,7 +61,7 @@ async def test_code_exec(ctx):
         }
     """)
 
-    code = re.sub(r"[^\x09\x0A\x20-\x7E]", "", code)
+    code = code.encode("ascii", errors="ignore").decode()
     payload = json.dumps({"name": "code_exec_go", "arguments": {"code": code}})
     data = await _safe_call(ctx, "call_tool", "--args", payload)
     print('HELLO')
