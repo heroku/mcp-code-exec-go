@@ -60,13 +60,7 @@ async def test_code_exec(ctx):
             fmt.Println(2 + 2)
         }
     """)
-
-    code = code.encode("ascii", errors="ignore").decode()
     payload = json.dumps({"name": "code_exec_go", "arguments": {"code": code}})
     data = await _safe_call(ctx, "call_tool", "--args", payload)
-    print('HELLO')
-    print(data)
-    print("Code repr:", repr(code))
-    print("Code bytes:", list(code.encode("utf-8")))
     print(_extract_stdout(data))
     assert _extract_stdout(data) == "4"
